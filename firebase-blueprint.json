@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user role and profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["fa_admin", "fa_member", "client_user"] },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Biomedical project details.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "stage": { "type": "string" },
+        "area": { "type": "string" },
+        "partneringStatus": { "type": "string" },
+        "contact": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "position": { "type": "string" },
+            "linkedin": { "type": "string" }
+          }
+        }
+      },
+      "required": ["id", "title", "code"]
+    },
+    "Request": {
+      "title": "Data Room Request",
+      "description": "Request for data room access.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "projectId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "denied"] },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["uid", "projectId", "status", "timestamp"]
+    },
+    "Inquiry": {
+      "title": "Project Inquiry",
+      "description": "Inquiry about a project.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "projectId": { "type": "string" },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["uid", "projectId", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "UserProfile",
+      "description": "User profile documents."
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Project documents."
+    },
+    "/requests/{requestId}": {
+      "schema": "Request",
+      "description": "Data room access requests."
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Project inquiries."
+    }
+  }
+}
